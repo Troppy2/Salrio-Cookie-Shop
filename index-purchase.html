@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="salrio.png">
+  <title>Salrios Cookie Shop</title>
+
+  <!--EmailJS-->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-sidebar.css">
+
+
+  <style>
+    /* Layout */
+    .layout {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid #ddd;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.5rem 0;
+      color: #333;
+      text-decoration: none;
+    }
+
+    .sidebar .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Product Sections */
+    .product-section {
+      display: none;
+    }
+
+    .product-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 20px;
+      margin: 40px auto;
+      width: 90%;
+      max-width: 1200px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card {
+      background-color: #f8f8f8;
+      border-radius: 15px;
+      padding: 1rem;
+      text-align: center;
+      width: 250px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      background-color: #ddd;
+      aspect-ratio: 1 / 1;
+    }
+
+    .product-card h2 {
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+    }
+
+    .product-card p {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    .product-card button {
+      background-color: #1ccdbf;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .product-card button:hover {
+      background-color: #59f6e9;
+    }
+  </style>
+
+</head>
+
+<body>
+  <!--Navigation bar-->
+  <div class="nav-bar">
+    <ul id="nav-links">
+      <li><a href="index.html">Salrio</a></li>
+      <li id="upward"><a href="index-information.html">Information</a></li>
+      <li id="forward"><a href="index-purchase.html">Pre-order</a></li>
+    </ul>
+  </div>
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="#" class="logo" onclick="displaySection('deals')">
+        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
+        </svg>
+        <span class="font-bold">Our Menu</span>
+      </a>
+
+      <div class="section">
+        <a href="#" onclick="displaySection('deals')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash"
+            viewBox="0 0 16 16">
+            <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
+            <path
+              d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2z" />
+          </svg>
+          <span>Deals</span>
+        </a>
+
+        <a href="#" onclick="displaySection('cookies')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cookie"
+            viewBox="0 0 16 16" style="margin-right: 4px;">
+            <path
+              d="M6 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m4.5.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-.5 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+            <path
+              d="M8 0a7.96 7.96 0 0 0-4.075 1.114q-.245.102-.437.28A8 8 0 1 0 8 0m3.25 14.201a1.5 1.5 0 0 0-2.13.71A7 7 0 0 1 8 15a6.97 6.97 0 0 1-3.845-1.15 1.5 1.5 0 1 0-2.005-2.005A6.97 6.97 0 0 1 1 8c0-1.953.8-3.719 2.09-4.989a1.5 1.5 0 1 0 2.469-1.574A7 7 0 0 1 8 1c1.42 0 2.742.423 3.845 1.15a1.5 1.5 0 1 0 2.005 2.005A6.97 6.97 0 0 1 15 8c0 .596-.074 1.174-.214 1.727a1.5 1.5 0 1 0-1.025 2.25 7 7 0 0 1-2.51 2.224Z" />
+          </svg>
+          <span>Cookies</span>
+        </a>
+
+        <a href="#" onclick="displaySection('drinks')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cup-straw"
+            viewBox="0 0 16 16">
+            <path
+              d="M13.902.334a.5.5 0 0 1-.28.65l-2.254.902-.4 1.927c.376.095.715.215.972.367.228.135.56.396.56.82q0 .069-.011.132l-.962 9.068a1.28 1.28 0 0 1-.524.93c-.488.34-1.494.87-3.01.87s-2.522-.53-3.01-.87a1.28 1.28 0 0 1-.524-.93L3.51 5.132A1 1 0 0 1 3.5 5c0-.424.332-.685.56-.82.262-.154.607-.276.99-.372C5.824 3.614 6.867 3.5 8 3.5c.712 0 1.389.045 1.985.127l.464-2.215a.5.5 0 0 1 .303-.356l2.5-1a.5.5 0 0 1 .65.278M9.768 4.607A14 14 0 0 0 8 4.5c-1.076 0-2.033.11-2.707.278A3.3 3.3 0 0 0 4.645 5c.146.073.362.15.648.222C5.967 5.39 6.924 5.5 8 5.5c.571 0 1.109-.03 1.588-.085zm.292 1.756C9.445 6.45 8.742 6.5 8 6.5c-1.133 0-2.176-.114-2.95-.308a6 6 0 0 1-.435-.127l.838 8.03c.013.121.06.186.102.215.357.249 1.168.69 2.438.69s2.081-.441 2.438-.69c.042-.029.09-.094.102-.215l.852-8.03a6 6 0 0 1-.435.127 9 9 0 0 1-.89.17zM4.467 4.884s.003.002.005.006zm7.066 0-.005.006zM11.354 5a3 3 0 0 0-.604-.21l-.099.445.055-.013c.286-.072.502-.149.648-.222" />
+          </svg>
+          <span>Drinks</span>
+        </a>
+      </div>
+
+      <div class="preorderSection">
+        <a href="#" onclick="displaySection('preorder')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart"
+            viewBox="0 0 16 16">
+            <path
+              d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+          </svg>
+          <span>Pre-order Form</span>
+        </a>
+      </div>
+    </aside>
+
+    <!--preorder section-->
+    <div class="preorder-section product-section">
+      <div class="title">Welcome!</div>
+      <div class="subtitle">Fill out the pre-order form with correct details!</div>
+
+      <form id="form">
+        <div class="form-group">
+          <label for="firstname">First Name</label>
+          <input id="firstname" name="firstname" type="text" placeholder="First Name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="lastname">Last Name</label>
+          <input id="lastname" name="lastname" type="text" placeholder="Last Name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="Email" required />
+        </div>
+
+        <div class="form-group">
+          <input id="button" class="submit" type="submit" value="Send Email" />
+        </div>
+      </form>
+    </div>
+
+
+
+    <!-- Product Sections -->
+
+    <!-- Meal Product Cards -->
+    <div class="product-section meal-section">
+      <div class="product-card">
+        <h2>Lemonade + Cookie</h2>
+        <p>Refreshing lemonade with a delicious cookie.</p>
+        <button>Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <h2>Water + Cookie</h2>
+        <p>Stay hydrated and satisfied.</p>
+        <button>Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <h2>Sparkling Water + Cookie</h2>
+        <p>A bubbly drink paired with sweetness.</p>
+        <button>Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <h2>Cookie Bundle</h2>
+        <p>A trio of your favorite cookies.</p>
+        <button>Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Cookie Product Cards -->
+    <div class="product-section cookie-section">
+      <div class="product-card">
+        <h2>Chocolate Chip</h2>
+        <p>Classic and gooey chocolate chip cookies.</p>
+        <button>Add to Cart</button>
+
+      </div>
+
+      <div class="product-card">
+        <h2>M&M Cookies</h2>
+        <p>Colorful, crunchy, and sweet.</p>
+        <button onclick="count()">Add to Cart</button>
+
+      </div>
+    </div>
+
+    <!-- Drink Product Cards -->
+    <div class="product-section drink-section">
+      <div class="product-card">
+        <h2>Lemonade</h2>
+        <p>Freshly squeezed lemonade.</p>
+        <button>Add to Cart</button>
+
+      </div>
+
+      <div class="product-card">
+        <h2>Water</h2>
+        <p>Crystal clear spring water.</p>
+        <button>Add to Cart</button>
+
+      </div>
+
+      <div class="product-card">
+        <h2>Sparkling Water</h2>
+        <p>Bubbly and refreshing.</p>
+        <button>Add to Cart</button>
+
+      </div>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="index.js" defer></script>
+
+    <!-- EmailJS Script -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script type="text/javascript">
+      // Initialize EmailJS after the page loads
+      window.onload = function () {
+        emailjs.init('a-L7SMyMyeixCLo8b'); // Your public key
+
+        const btn = document.getElementById('button');
+
+        document.getElementById('form')
+          .addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent page reload
+
+            btn.value = 'Sending...';
+
+            const serviceID = 'default_service';
+            const templateID = 'template_yz7amja';
+
+            emailjs.sendForm(serviceID, templateID, this)
+              .then(() => {
+                btn.value = 'Send Email';
+                alert('Sent!');
+              }, (err) => {
+                btn.value = 'Send Email';
+                alert(JSON.stringify(err));
+              });
+          });
+      };
+    </script>
+
+</body>
+
+</html>
